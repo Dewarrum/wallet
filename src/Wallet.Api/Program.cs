@@ -15,6 +15,13 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.InstanceName = "Sessions";
 });
 
+if (builder.Environment.IsDevelopment())
+{
+    builder
+        .Services.AddReverseProxy()
+        .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+}
+
 builder.ConfigureAuthentication();
 builder.ConfigureAuthorization();
 builder.ConfigureSessions();
@@ -23,6 +30,7 @@ ApplicationModule.Configure(builder.Services);
 ApiModule.Configure(builder.Services);
 
 var app = builder.Build();
+app.UsePathBase("/api");
 
 var userGroup = app.MapGroup("account");
 userGroup.MapGet("signin", AccountEndpoints.SignIn);
@@ -48,5 +56,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
 app.UseSession();
+app.MapReverseProxy();
 
 app.Run();

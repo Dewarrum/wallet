@@ -8,11 +8,16 @@ namespace Wallet.Api.Accounts;
 
 public static class AccountEndpoints
 {
-    public static IResult SignIn(ExternalAuthenticationProvider authenticationProvider)
+    public static IResult SignIn(
+        HttpContext httpContext,
+        ExternalAuthenticationProvider authenticationProvider,
+        string? backUrl
+    )
     {
         var redirectUri = authenticationProvider switch
         {
-            ExternalAuthenticationProvider.Google => "account/signin-google",
+            ExternalAuthenticationProvider.Google
+                => $"/api/account/signin-google?backUrl={backUrl ?? "/app"}",
             _ => null,
         };
 
@@ -27,7 +32,7 @@ public static class AccountEndpoints
     {
         var redirectUri = authenticationProvider switch
         {
-            ExternalAuthenticationProvider.Google => "account/signup-google",
+            ExternalAuthenticationProvider.Google => "/api/account/signup-google",
             _ => null,
         };
 
@@ -41,6 +46,7 @@ public static class AccountEndpoints
     public static async Task<IResult> GoogleSignIn(
         HttpContext httpContext,
         IUserService userService,
+        string? backUrl,
         CancellationToken cancellationToken = default
     )
     {
@@ -73,7 +79,7 @@ public static class AccountEndpoints
                 new ClaimsPrincipal(claimsIdentity)
             );
 
-            return Results.Json(AccountDto.From(user));
+            return Results.Redirect(backUrl ?? "/app");
         }
         catch (UserNotFoundException e)
         {
@@ -121,11 +127,17 @@ public static class AccountEndpoints
         var response = await httpContext.AuthenticateAsync(
             CookieAuthenticationDefaults.AuthenticationScheme
         );
-        if (response.Principal == null)
+        if (response.Principal is not { } claimsPrincipal)
             return Results.Forbid();
 
-        var claims = response.Principal?.Claims.ToDictionary(c => c.Type, c => c.Value);
+        var account = new AccountDto(
+            Guid.Parse(
+                claimsPrincipal.Claims.Single(c => c.Type == ClaimTypes.NameIdentifier).Value
+            ),
+            claimsPrincipal.Claims.Single(c => c.Type == ClaimTypes.Name).Value,
+            claimsPrincipal.Claims.Single(c => c.Type == ClaimTypes.Email).Value
+        );
 
-        return Results.Json(claims);
+        return Results.Json(account);
     }
 }

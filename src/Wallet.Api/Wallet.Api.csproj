@@ -6,6 +6,8 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
         <UserSecretsId>b10c7eef-88d8-46bf-84e1-314c538d5e0a</UserSecretsId>
+        <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
+        <SpaProxyServerUrl>http://localhost:5173</SpaProxyServerUrl>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,6 +15,7 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.6"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="Yarp.ReverseProxy" Version="2.1.0" />
     </ItemGroup>
 
     <ItemGroup>
