@@ -1,5 +1,6 @@
 using Wallet.Api;
-using Wallet.Api.Accounts;
+using Wallet.Api.Auth;
+using Wallet.Api.Categories;
 using Wallet.Api.Profiles;
 using Wallet.Api.Transactions;
 using Wallet.Application;
@@ -32,19 +33,10 @@ ApiModule.Configure(builder.Services);
 var app = builder.Build();
 app.UsePathBase("/api");
 
-var userGroup = app.MapGroup("account");
-userGroup.MapGet("signin", AccountEndpoints.SignIn);
-userGroup.MapGet("signin-google", AccountEndpoints.GoogleSignIn);
-userGroup.MapGet("signup", AccountEndpoints.SignUp);
-userGroup.MapGet("signup-google", AccountEndpoints.GoogleSignUp);
-userGroup.MapGet("my-info", AccountEndpoints.MyInfo);
-
-var transactionGroup = app.MapGroup("transactions").RequireAuthorization();
-transactionGroup.MapGet("{id:guid}", TransactionEndpoints.Get);
-
-var profileGroup = app.MapGroup("profiles").RequireAuthorization();
-profileGroup.MapPost("", ProfileEndpoints.Create);
-profileGroup.MapGet("", ProfileEndpoints.GetForUser);
+AuthEndpoints.Map(app);
+ProfileEndpoints.Map(app);
+TransactionEndpoints.Map(app);
+CategoryEndpoints.Map(app);
 
 if (app.Environment.IsDevelopment())
 {

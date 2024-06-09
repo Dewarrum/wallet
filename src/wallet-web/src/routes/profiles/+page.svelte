@@ -1,0 +1,3 @@
+<script lang="ts"></script>
+
+<h2 class="h2">Profiles</h2>

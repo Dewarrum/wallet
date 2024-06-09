@@ -15,7 +15,8 @@ const config = {
 		paths: {
 			base: '/app'
 		}
-	}
+	},
+	preprocess: vitePreprocess(),
 };
 
 export default config;

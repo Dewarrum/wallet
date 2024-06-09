@@ -27,14 +27,14 @@ public sealed class Transaction(
             default
         ) { }
 
-    public Guid Id { get; } = id;
-    public Guid ProfileId { get; } = profileId;
-    public decimal Amount { get; } = amount;
-    public DateTime CreatedAt { get; } = createdAt;
-    public string Description { get; } = description;
-    public Guid CategoryId { get; } = categoryId;
-    public TransactionType Type { get; } = type;
-    public bool IsRecurring { get; } = isRecurring;
-    public PaymentMethod PaymentMethod { get; } = paymentMethod;
-    public string? Merchant { get; } = merchant;
+    public Guid Id { get; init; } = id;
+    public Guid ProfileId { get; init; } = profileId;
+    public decimal Amount { get; private set; } = amount;
+    public DateTime CreatedAt { get; init; } = createdAt;
+    public string Description { get; private set; } = description;
+    public Guid CategoryId { get; private set; } = categoryId;
+    public TransactionType Type { get; private set; } = type;
+    public bool IsRecurring { get; private set; } = isRecurring;
+    public PaymentMethod PaymentMethod { get; private set; } = paymentMethod;
+    public string? Merchant { get; private set; } = merchant;
 }

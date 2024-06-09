@@ -25,6 +25,15 @@ internal sealed class ProfileService(IProfileRepository profileRepository, IUnit
         return profile;
     }
 
+    public async Task<Profile> Get(Guid id, CancellationToken cancellationToken = default)
+    {
+        var profile = await profileRepository.Get(id, cancellationToken);
+        if (profile is null)
+            throw new ProfileNotFoundException(id);
+
+        return profile;
+    }
+
     public async Task<IReadOnlyList<Profile>> GetForUser(
         Guid userId,
         CancellationToken cancellationToken = default

@@ -9,6 +9,8 @@ public interface IProfileService
         CancellationToken cancellationToken = default
     );
 
+    Task<Profile> Get(Guid id, CancellationToken cancellationToken = default);
+
     Task<IReadOnlyList<Profile>> GetForUser(
         Guid userId,
         CancellationToken cancellationToken = default

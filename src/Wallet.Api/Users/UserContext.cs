@@ -9,12 +9,9 @@ internal sealed class UserContext(
     IUserService userService
 ) : IUserContext
 {
-    public async Task<User> Get(CancellationToken cancellationToken)
+    public async Task<User> Get(CancellationToken cancellationToken = default)
     {
-        var userId = Guid.Parse(
-            httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier)
-        );
-
-        return await userService.GetById(userId, cancellationToken);
+        var email = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Email);
+        return await userService.GetByEmail(email, cancellationToken);
     }
 }

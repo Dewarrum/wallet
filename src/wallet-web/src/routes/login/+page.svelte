@@ -1,29 +1,22 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import { userStore } from '../../stores/user';
-	import { onMount } from 'svelte';
+	import { getAuth } from '$lib/auth/queries';
+	import { ProgressBar } from '@skeletonlabs/skeleton';
 
-	onMount(async () => {
-		$userStore = {
-			...$userStore,
-			isLoading: true
-		};
+	const authQuery = getAuth();
 
-		const response = await fetch('/api/account/my-info');
-		$userStore = await response.json();
-	});
+	function login() {
+		window.location.href = '/api/auth/login';
+	}
 </script>
 
-<h1>Login page</h1>
+<h2 class="h2">Login page</h2>
 
-{#if $userStore.isLoading}
-	<p>Loading</p>
-{:else if $userStore.user}
-	<p>{$userStore.user.name}</p>
+{#if $authQuery.isLoading}
+	<ProgressBar />
+{:else if $authQuery.data}
+	<p>{$authQuery.data.name}</p>
 {:else}
-	<form method="get" action="/api/account/signin">
-		<input type="hidden" name="authenticationProvider" value="Google" />
-		<input type="hidden" name="backUrl" value="{base}/login" />
-		<button type="submit">Login via Google</button>
-	</form>
+	<button type="button" class="variant-filled-primary btn" on:click={() => login()}
+		>Login via Google</button
+	>
 {/if}
