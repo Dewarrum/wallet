@@ -1,4 +1,3 @@
-using Wallet.Api.Users;
 using Wallet.Api.Utils;
 using Wallet.Application.Categories;
 
@@ -11,13 +10,12 @@ public static class CategoryGetManyEndpoint
         group.MapGet(
             "",
             async (
+                Guid userId,
                 ICategoryService categoryService,
-                IUserContext userContext,
                 CancellationToken cancellationToken
             ) =>
             {
-                var user = await userContext.Get(cancellationToken);
-                var categories = await categoryService.GetForUser(user.Id, cancellationToken);
+                var categories = await categoryService.GetForUser(userId, cancellationToken);
 
                 return Results.Json(
                     new PageResponse<CategoryDto>(categories.Select(CategoryDto.From).ToList())

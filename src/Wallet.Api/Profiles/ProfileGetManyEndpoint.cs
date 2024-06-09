@@ -1,8 +1,5 @@
-using Wallet.Api.Users;
 using Wallet.Api.Utils;
 using Wallet.Application.Profiles;
-using Wallet.Application.Users;
-using Wallet.Domain.Users;
 
 namespace Wallet.Api.Profiles;
 
@@ -13,22 +10,12 @@ public static class ProfileGetManyEndpoint
         group.MapGet(
             "",
             async (
+                Guid userId,
                 IProfileService profileService,
-                IUserContext userContext,
                 CancellationToken cancellationToken
             ) =>
             {
-                User user;
-                try
-                {
-                    user = await userContext.Get(cancellationToken);
-                }
-                catch (UserNotFoundException)
-                {
-                    return Results.Forbid();
-                }
-
-                var profiles = await profileService.GetForUser(user.Id, cancellationToken);
+                var profiles = await profileService.GetForUser(userId, cancellationToken);
 
                 return Results.Json(
                     new PageResponse<ProfileDto>(profiles.Select(ProfileDto.From).ToList())

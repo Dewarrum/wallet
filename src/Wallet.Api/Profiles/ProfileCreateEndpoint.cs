@@ -1,7 +1,5 @@
-using Wallet.Api.Users;
+using Microsoft.AspNetCore.Mvc;
 using Wallet.Application.Profiles;
-using Wallet.Application.Users;
-using Wallet.Domain.Users;
 
 namespace Wallet.Api.Profiles;
 
@@ -12,26 +10,12 @@ public static class ProfileCreateEndpoint
         group.MapPost(
             "",
             async (
-                string? currency,
+                [FromBody] CreateProfileRequest request,
                 IProfileService profileService,
-                IUserContext userContext,
                 CancellationToken cancellationToken
             ) =>
             {
-                User user;
-                try
-                {
-                    user = await userContext.Get(cancellationToken);
-                }
-                catch (UserNotFoundException)
-                {
-                    return Results.Forbid();
-                }
-
-                var profile = await profileService.Create(
-                    new CreateProfileRequest(user.Id, currency),
-                    cancellationToken
-                );
+                var profile = await profileService.Create(request, cancellationToken);
 
                 return Results.Json(ProfileDto.From(profile));
             }
