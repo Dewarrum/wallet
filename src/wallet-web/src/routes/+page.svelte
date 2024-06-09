@@ -1,30 +1,31 @@
 <script lang="ts">
-	import ProfileSelector from '$lib/profiles/ProfileSelector.svelte';
-	import AddTransactionButton from '$lib/transactions/AddTransactionButton.svelte';
-	import TransactionList from '$lib/transactions/TransactionList.svelte';
+	import Button from '$lib/components/ui/button/button.svelte';
+	import { signIn, signOut } from '@auth/sveltekit/client';
 
-	let profileId: string | null;
+	let password = '';
 </script>
 
-<div class="container">
-	<div class="mb-2 flex space-x-4">
-		<h2 class="h2">Profiles</h2>
-
-		<div>
-			<ProfileSelector bind:profileId />
+<nav>
+	<p>
+		These actions are all using the methods exported from
+		<code>@auth/sveltekit/client</code>
+	</p>
+	<div class="actions">
+		<div class="wrapper-form">
+			<Button on:click={() => signIn('google')}>Sign In with Google</Button>
 		</div>
-
-		<span class="flex-grow"></span>
-
-		{#if profileId}
-			<div>
-				<AddTransactionButton {profileId} />
+		<div class="wrapper-form">
+			<Button on:click={() => signIn('github')}>Sign In with GitHub</Button>
+		</div>
+		<div class="wrapper-form">
+			<div class="input-wrapper">
+				<label for="password">Password</label>
+				<input bind:value={password} type="password" id="password" name="password" required />
 			</div>
-		{/if}
+			<button on:click={() => signIn('credentials', { password })}>
+				Sign In with Credentials
+			</button>
+			<button on:click={() => signOut()}> Sign Out </button>
+		</div>
 	</div>
-
-	<h3 class="h3 mb-2">Transactions</h3>
-	{#if profileId}
-		<TransactionList {profileId} />
-	{/if}
-</div>
+</nav>
