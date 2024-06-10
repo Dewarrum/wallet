@@ -8,14 +8,10 @@ public static class UserGetEndpoint
     {
         group.MapGet(
             "{id:guid}",
-            async (
-                Guid id,
-                IUserService userService,
-                CancellationToken cancellationToken
-            ) =>
+            async (Guid id, IUserService userService, CancellationToken cancellationToken) =>
             {
                 var user = await userService.GetById(id, cancellationToken);
-                return Results.Json(user);
+                return Results.Json(UserInfoDto.From(user));
             }
         );
     }
