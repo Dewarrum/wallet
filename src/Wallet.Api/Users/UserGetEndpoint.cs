@@ -7,10 +7,10 @@ public static class UserGetEndpoint
     public static void Map(RouteGroupBuilder group)
     {
         group.MapGet(
-            "{id:guid}",
-            async (Guid id, IUserService userService, CancellationToken cancellationToken) =>
+            "",
+            async (string email, IUserService userService, CancellationToken cancellationToken) =>
             {
-                var user = await userService.GetById(id, cancellationToken);
+                var user = await userService.GetByEmail(email, cancellationToken);
                 return Results.Json(UserInfoDto.From(user));
             }
         );
