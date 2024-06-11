@@ -6,6 +6,11 @@
 	import { Button } from '$lib/components/ui/button/index';
 	import * as Sheet from '$lib/components/ui/sheet/index';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index';
+	import { page } from '$app/stores';
+	import { signOut } from '@auth/sveltekit/client';
+
+	let route;
+	$: route = $page.url.pathname.split('/')[2];
 </script>
 
 <div class="flex min-h-screen w-full flex-col">
@@ -17,13 +22,28 @@
 				<Package2 class="h-6 w-6" />
 				<span class="sr-only">Wallet</span>
 			</a>
-			<a href="/app/transactions" class="text-foreground transition-colors hover:text-foreground">
+			<a
+				href="/app/transactions"
+				class="transition-colors hover:text-foreground"
+				class:text-foreground={route === 'transactions'}
+				class:text-muted-foreground={route !== 'transactions'}
+			>
 				Transactions
 			</a>
-			<a href="##" class="text-muted-foreground transition-colors hover:text-foreground">
+			<a
+				href="/app/profiles"
+				class="transition-colors hover:text-foreground"
+				class:text-foreground={route === 'profiles'}
+				class:text-muted-foreground={route !== 'profiles'}
+			>
 				Profiles
 			</a>
-			<a href="##" class="text-muted-foreground transition-colors hover:text-foreground">
+			<a
+				href="/app/categories"
+				class="transition-colors hover:text-foreground"
+				class:text-foreground={route === 'categories'}
+				class:text-muted-foreground={route !== 'categories'}
+			>
 				Categories
 			</a>
 		</nav>
@@ -59,9 +79,13 @@
 					<DropdownMenu.Label>My Account</DropdownMenu.Label>
 					<DropdownMenu.Separator />
 					<DropdownMenu.Item>Settings</DropdownMenu.Item>
-					<DropdownMenu.Item>Support</DropdownMenu.Item>
 					<DropdownMenu.Separator />
-					<DropdownMenu.Item>Logout</DropdownMenu.Item>
+					<DropdownMenu.Item
+						on:click={() =>
+							signOut({
+								callbackUrl: '/'
+							})}>Logout</DropdownMenu.Item
+					>
 				</DropdownMenu.Content>
 			</DropdownMenu.Root>
 		</div>

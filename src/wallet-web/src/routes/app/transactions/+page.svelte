@@ -1,16 +1,29 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button/index';
-	import { Badge } from '$lib/components/ui/badge/index';
 	import * as Card from '$lib/components/ui/card/index';
-	import * as Table from '$lib/components/ui/table/index';
 	import ArrowUpRight from 'lucide-svelte/icons/arrow-up-right';
+	import TransactionTable from '$lib/components/transactions/transaction-table.svelte';
+	import * as Select from '$lib/components/ui/select';
+
+	export let data;
+	const { transactions, profiles } = data;
 </script>
 
 <Card.Root class="xl:col-span-2">
 	<Card.Header class="flex flex-row items-center">
-		<div class="grid gap-2">
+		<div class="grid gap-4 lg:w-1/3">
 			<Card.Title>Transactions</Card.Title>
-			<Card.Description>Recent transactions from your store.</Card.Description>
+
+			<Select.Root>
+				<Select.Trigger class="w-[180px]">
+					<Select.Value placeholder={profiles.at(0)?.id} />
+				</Select.Trigger>
+				<Select.Content>
+					{#each profiles as profile}
+						<Select.Item value={profile.id}>{profile.id}</Select.Item>
+					{/each}
+				</Select.Content>
+			</Select.Root>
 		</div>
 		<Button href="##" size="sm" class="ml-auto gap-1">
 			View All
@@ -18,88 +31,6 @@
 		</Button>
 	</Card.Header>
 	<Card.Content>
-		<Table.Root>
-			<Table.Header>
-				<Table.Row>
-					<Table.Head>Customer</Table.Head>
-					<Table.Head class="xl:table.-column hidden">Type</Table.Head>
-					<Table.Head class="xl:table.-column hidden">Status</Table.Head>
-					<Table.Head class="xl:table.-column hidden">Date</Table.Head>
-					<Table.Head class="text-right">Amount</Table.Head>
-				</Table.Row>
-			</Table.Header>
-			<Table.Body>
-				<Table.Row>
-					<Table.Cell>
-						<div class="font-medium">Liam Johnson</div>
-						<div class="hidden text-sm text-muted-foreground md:inline">liam@example.com</div>
-					</Table.Cell>
-					<Table.Cell class="xl:table.-column hidden">Sale</Table.Cell>
-					<Table.Cell class="xl:table.-column hidden">
-						<Badge class="text-xs" variant="outline">Approved</Badge>
-					</Table.Cell>
-					<Table.Cell class="md:table.-cell xl:table.-column hidden lg:hidden">
-						2023-06-23
-					</Table.Cell>
-					<Table.Cell class="text-right">$250.00</Table.Cell>
-				</Table.Row>
-				<Table.Row>
-					<Table.Cell>
-						<div class="font-medium">Olivia Smith</div>
-						<div class="hidden text-sm text-muted-foreground md:inline">olivia@example.com</div>
-					</Table.Cell>
-					<Table.Cell class="xl:table.-column hidden">Refund</Table.Cell>
-					<Table.Cell class="xl:table.-column hidden">
-						<Badge class="text-xs" variant="outline">Declined</Badge>
-					</Table.Cell>
-					<Table.Cell class="md:table.-cell xl:table.-column hidden lg:hidden">
-						2023-06-24
-					</Table.Cell>
-					<Table.Cell class="text-right">$150.00</Table.Cell>
-				</Table.Row>
-				<Table.Row>
-					<Table.Cell>
-						<div class="font-medium">Noah Williams</div>
-						<div class="hidden text-sm text-muted-foreground md:inline">noah@example.com</div>
-					</Table.Cell>
-					<Table.Cell class="xl:table.-column hidden">Subscription</Table.Cell>
-					<Table.Cell class="xl:table.-column hidden">
-						<Badge class="text-xs" variant="outline">Approved</Badge>
-					</Table.Cell>
-					<Table.Cell class="md:table.-cell xl:table.-column hidden lg:hidden">
-						2023-06-25
-					</Table.Cell>
-					<Table.Cell class="text-right">$350.00</Table.Cell>
-				</Table.Row>
-				<Table.Row>
-					<Table.Cell>
-						<div class="font-medium">Emma Brown</div>
-						<div class="hidden text-sm text-muted-foreground md:inline">emma@example.com</div>
-					</Table.Cell>
-					<Table.Cell class="xl:table.-column hidden">Sale</Table.Cell>
-					<Table.Cell class="xl:table.-column hidden">
-						<Badge class="text-xs" variant="outline">Approved</Badge>
-					</Table.Cell>
-					<Table.Cell class="md:table.-cell xl:table.-column hidden lg:hidden">
-						2023-06-26
-					</Table.Cell>
-					<Table.Cell class="text-right">$450.00</Table.Cell>
-				</Table.Row>
-				<Table.Row>
-					<Table.Cell>
-						<div class="font-medium">Liam Johnson</div>
-						<div class="hidden text-sm text-muted-foreground md:inline">liam@example.com</div>
-					</Table.Cell>
-					<Table.Cell class="xl:table.-column hidden">Sale</Table.Cell>
-					<Table.Cell class="xl:table.-column hidden">
-						<Badge class="text-xs" variant="outline">Approved</Badge>
-					</Table.Cell>
-					<Table.Cell class="md:table.-cell xl:table.-column hidden lg:hidden">
-						2023-06-27
-					</Table.Cell>
-					<Table.Cell class="text-right">$550.00</Table.Cell>
-				</Table.Row>
-			</Table.Body>
-		</Table.Root>
+		<TransactionTable {transactions} />
 	</Card.Content>
 </Card.Root>
