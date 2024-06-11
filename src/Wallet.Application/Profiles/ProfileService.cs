@@ -14,6 +14,8 @@ internal sealed class ProfileService(IProfileRepository profileRepository, IUnit
     {
         var profile = new Profile(
             Guid.NewGuid(),
+            request.Name,
+            request.Description,
             request.UserId,
             request.Currency ?? "USD",
             DateTime.UtcNow
