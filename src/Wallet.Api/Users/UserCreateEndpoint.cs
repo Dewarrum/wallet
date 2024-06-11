@@ -15,8 +15,15 @@ public static class UserCreateEndpoint
                 CancellationToken cancellationToken
             ) =>
             {
-                var user = await userService.Register(request, cancellationToken);
-                return Results.CreatedAtRoute("GetUser", new { id = user.Id }, user);
+                try
+                {
+                    var user = await userService.Register(request, cancellationToken);
+                    return Results.CreatedAtRoute("GetUser", new { id = user.Id }, user);
+                }
+                catch (UserAlreadyExistsException)
+                {
+                    return Results.Conflict();
+                }
             }
         );
     }

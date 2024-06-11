@@ -10,8 +10,15 @@ public static class UserGetEndpoint
             "",
             async (string email, IUserService userService, CancellationToken cancellationToken) =>
             {
-                var user = await userService.GetByEmail(email, cancellationToken);
-                return Results.Json(UserInfoDto.From(user));
+                try
+                {
+                    var user = await userService.GetByEmail(email, cancellationToken);
+                    return Results.Json(UserInfoDto.From(user));
+                }
+                catch (UserNotFoundException)
+                {
+                    return Results.NotFound();
+                }
             }
         );
     }
