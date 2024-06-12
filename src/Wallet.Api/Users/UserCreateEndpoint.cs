@@ -18,7 +18,7 @@ public static class UserCreateEndpoint
                 try
                 {
                     var user = await userService.Register(request, cancellationToken);
-                    return Results.CreatedAtRoute("GetUser", new { id = user.Id }, user);
+                    return Results.CreatedAtRoute("GetUser", new { email = user.Email }, user);
                 }
                 catch (UserAlreadyExistsException)
                 {
