@@ -1,4 +1,4 @@
-import type { Profile } from "$lib/models/profile";
+import type { CreateProfileRequest, Profile } from "$lib/models/profile";
 import type { PageResponse } from ".";
 
 export const createProfilesClient = (apiUrl: string) => {
@@ -14,8 +14,21 @@ export const createProfilesClient = (apiUrl: string) => {
         return json;
     }
 
+    async function create(profile: CreateProfileRequest) {
+        const response = await fetch(`${apiUrl}/profiles`, {
+            method: "POST",
+            body: JSON.stringify(profile),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const json: Profile = await response.json();
+        return json;
+    }
+
     return {
         get,
         getAll,
+        create,
     }
 }

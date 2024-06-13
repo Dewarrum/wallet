@@ -20,7 +20,7 @@ export const createUsersClient = (apiUrl: string) => {
             }
         });
 
-        const json = await response.json();
+        const json: User = await response.json();
         return json;
     }
 
