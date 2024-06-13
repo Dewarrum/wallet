@@ -8,7 +8,7 @@ export const createProfilesClient = (apiUrl: string) => {
         return json;
     }
 
-    async function getAll(userId: string) {
+    async function getMany(userId: string) {
         const response = await fetch(`${apiUrl}/profiles?userId=${userId}`);
         const json: PageResponse<Profile> = await response.json();
         return json;
@@ -28,7 +28,7 @@ export const createProfilesClient = (apiUrl: string) => {
 
     return {
         get,
-        getAll,
+        getAll: getMany,
         create,
     }
 }

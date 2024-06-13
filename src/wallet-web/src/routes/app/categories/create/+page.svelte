@@ -4,12 +4,12 @@
 	import * as Card from '$lib/components/ui/card/index';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { createProfileSchema } from '$lib/models/profile.js';
+	import { createCategorySchema } from '$lib/models/categories.js';
 
 	export let data;
 
 	const form = superForm(data.form, {
-		validators: zodClient(createProfileSchema)
+		validators: zodClient(createCategorySchema)
 	});
 
 	const { form: formData, enhance } = form;
@@ -21,7 +21,7 @@
 			<h2
 				class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
 			>
-				Create profile
+				Create category
 			</h2>
 		</Card.Header>
 		<Card.Content>
@@ -40,14 +40,7 @@
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
-				<Form.Field {form} name="currency">
-					<Form.Control let:attrs>
-						<Form.Label>Currency</Form.Label>
-						<Input {...attrs} bind:value={$formData.currency} />
-					</Form.Control>
-					<Form.FieldErrors />
-				</Form.Field>
-				<Form.Button>Submit</Form.Button>
+				<Form.Button>Create</Form.Button>
 			</form>
 		</Card.Content>
 	</Card.Root>
