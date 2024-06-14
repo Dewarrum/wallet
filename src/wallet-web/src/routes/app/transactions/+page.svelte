@@ -9,7 +9,11 @@
 	import type { Selected } from 'bits-ui';
 
 	export let data;
-	const { transactions, profiles } = data;
+	let { transactions, profiles } = data;
+	$: {
+		transactions = data.transactions;
+		profiles = data.profiles;
+	}
 
 	let currentProfileId = $page.url.searchParams.get('profileId');
 	let currentProfile = currentProfileId
@@ -25,7 +29,7 @@
 			label: s.label
 		};
 
-		goto(`/app/transactions?profileId=${s.value}`);
+		goto(`?profileId=${s.value}`);
 	}
 </script>
 
