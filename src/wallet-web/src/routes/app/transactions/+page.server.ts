@@ -1,6 +1,7 @@
-import { http } from "$lib/http";
+import { http } from "$lib/http.js";
 
-export async function load({ url, parent }) {
+export async function load({ url, parent, depends }) {
+    depends('api/transactions');
     const { user } = await parent();
     const profiles = await http.profiles.getAll(user.id);
 

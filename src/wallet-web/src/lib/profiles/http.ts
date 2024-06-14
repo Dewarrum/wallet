@@ -1,5 +1,5 @@
-import type { CreateProfileRequest, Profile } from "$lib/models/profile";
-import type { PageResponse } from ".";
+import type { PageResponse } from "$lib/http";
+import type { CreateProfileRequest, Profile } from "$lib/profiles/models";
 
 export const createProfilesClient = (apiUrl: string) => {
     async function get(profileId: string) {

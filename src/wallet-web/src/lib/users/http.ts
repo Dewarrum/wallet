@@ -1,4 +1,4 @@
-import type { User } from "$lib/models/user";
+import type { User } from "$lib/users/models";
 
 export const createUsersClient = (apiUrl: string) => {
     async function get(email: string, name: string) {

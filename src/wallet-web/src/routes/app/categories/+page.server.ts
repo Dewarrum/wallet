@@ -1,4 +1,4 @@
-import { http } from '$lib/http/index.js';
+import { http } from "$lib/http.js";
 
 export async function load({ parent }) {
     const { user } = await parent();

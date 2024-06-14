@@ -3,8 +3,8 @@ import type { Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types.js";
 import { superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
-import { http } from "$lib/http/index.js";
-import { createTransactionSchema } from "$lib/models/transaction.js";
+import { http } from "$lib/http.js";
+import { createTransactionSchema } from "$lib/transactions/models.js";
 
 export const load: PageServerLoad = async ({ parent }) => {
     const { user } = await parent();

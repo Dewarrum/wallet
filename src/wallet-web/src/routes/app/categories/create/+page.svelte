@@ -4,7 +4,7 @@
 	import * as Card from '$lib/components/ui/card/index';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { createCategorySchema } from '$lib/models/categories.js';
+	import { createCategorySchema } from '$lib/categories/models.js';
 
 	export let data;
 

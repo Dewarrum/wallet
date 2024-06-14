@@ -1,5 +1,5 @@
-import type { CreateTransactionRequest, Transaction } from "$lib/models/transaction";
-import type { PageResponse } from ".";
+import type { PageResponse } from "$lib/http";
+import type { CreateTransactionRequest, Transaction } from "$lib/transactions/models";
 
 export const createTransactionClient = (apiUrl: string) => {
     async function get(profileId: string) {

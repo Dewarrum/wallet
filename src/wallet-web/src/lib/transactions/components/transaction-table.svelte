@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { Transaction } from '$lib/models/transaction';
-	import * as Table from '../ui/table';
+	import type { Transaction } from '$lib/transactions/models';
+	import * as Table from '../../components/ui/table';
 	import TransactionItem from './transaction-item.svelte';
 
 	export let transactions: Transaction[];

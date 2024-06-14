@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { type Transaction } from '$lib/models/transaction';
-	import { Badge } from '../ui/badge';
-	import * as Table from '../ui/table';
+	import { type Transaction } from '$lib/transactions/models';
+	import { Badge } from '../../components/ui/badge';
+	import * as Table from '../../components/ui/table';
 
 	export let transaction: Transaction;
 </script>

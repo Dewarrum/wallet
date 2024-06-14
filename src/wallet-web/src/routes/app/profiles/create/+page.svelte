@@ -4,7 +4,7 @@
 	import * as Card from '$lib/components/ui/card/index';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { createProfileSchema } from '$lib/models/profile.js';
+	import { createProfileSchema } from '$lib/profiles/models.js';
 
 	export let data;
 

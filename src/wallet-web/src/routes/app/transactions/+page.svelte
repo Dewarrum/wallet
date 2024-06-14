@@ -2,7 +2,7 @@
 	import { Button } from '$lib/components/ui/button/index';
 	import * as Card from '$lib/components/ui/card/index';
 	import ArrowUpRight from 'lucide-svelte/icons/arrow-up-right';
-	import TransactionTable from '$lib/components/transactions/transaction-table.svelte';
+	import TransactionTable from '$lib/transactions/components/transaction-table.svelte';
 	import * as Select from '$lib/components/ui/select';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';

@@ -1,5 +1,5 @@
-import type { Category, CreateCategoryRequest } from "$lib/models/categories";
-import type { PageResponse } from ".";
+import type { Category, CreateCategoryRequest } from "$lib/categories/models";
+import type { PageResponse } from "$lib/http";
 
 export const createCategoriesClient = (apiUrl: string) => {
     async function getAll(userId: string) {

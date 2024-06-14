@@ -1,8 +1,8 @@
 import { API_URL } from "$env/static/private";
-import { createCategoriesClient } from "./categories";
-import { createProfilesClient } from "./profiles";
-import { createTransactionClient } from "./transactions";
-import { createUsersClient } from "./users";
+import { createCategoriesClient } from "./categories/http";
+import { createProfilesClient } from "./profiles/http";
+import { createTransactionClient } from "./transactions/http";
+import { createUsersClient } from "./users/http";
 
 const apiUrl = API_URL;
 

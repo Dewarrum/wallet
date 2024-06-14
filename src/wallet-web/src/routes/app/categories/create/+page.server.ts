@@ -3,8 +3,8 @@ import type { Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types.js";
 import { superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
-import { http } from "$lib/http/index.js";
-import { createCategorySchema } from "$lib/models/categories.js";
+import { createCategorySchema } from "$lib/categories/models.js";
+import { http } from "$lib/http.js";
 
 export const load: PageServerLoad = async () => {
     return {

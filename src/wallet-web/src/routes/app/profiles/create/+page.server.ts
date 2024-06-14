@@ -1,10 +1,10 @@
-import { createProfileSchema } from "$lib/models/profile.js";
+import { createProfileSchema } from "$lib/profiles/models.js";
 import { fail } from "@sveltejs/kit";
 import type { Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types.js";
 import { superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
-import { http } from "$lib/http/index.js";
+import { http } from "$lib/http.js";
 
 export const load: PageServerLoad = async () => {
     return {

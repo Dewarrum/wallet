@@ -9,11 +9,11 @@
 		PaymentMethod,
 		TransactionType,
 		createTransactionSchema
-	} from '$lib/models/transaction.js';
+	} from '$lib/transactions/models.js';
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import type { Selected } from 'bits-ui';
-	import type { Profile } from '$lib/models/profile.js';
+	import type { Profile } from '$lib/profiles/models.js';
 	import { Switch } from '$lib/components/ui/switch/index.js';
 
 	export let data;
