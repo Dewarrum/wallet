@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type Transaction } from '$lib/transactions/models';
+	import { TransactionType, type Transaction } from '$lib/transactions/models';
 	import { Badge } from '../../components/ui/badge';
 	import * as Table from '../../components/ui/table';
 
@@ -22,8 +22,8 @@
 	>
 	<Table.Cell class="text-right"
 		><span
-			class:text-red-700={transaction.type === 'Income'}
-			class:text-green-700={transaction.type === 'Expense'}>${transaction.amount}</span
+			class:text-red-700={transaction.type === TransactionType.Expense}
+			class:text-green-700={transaction.type === TransactionType.Income}>${transaction.amount}</span
 		></Table.Cell
 	>
 </Table.Row>
