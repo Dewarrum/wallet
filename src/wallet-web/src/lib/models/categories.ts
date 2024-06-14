@@ -6,7 +6,7 @@ export type Category = {
     name: string;
     description: string;
     createdAt: Date;
-}
+};
 
 export const createCategorySchema = z.object({
     name: z.string().min(1),

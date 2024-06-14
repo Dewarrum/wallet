@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export type Transaction = {
     id: string;
     profileId: string;
@@ -12,25 +14,31 @@ export type Transaction = {
 };
 
 export enum TransactionType {
-    Income,
-    Expense,
-};
-
-export function getTransactionTypeDisplayName(type: TransactionType): string {
-    switch (type) {
-        case TransactionType.Income:
-            return "Income";
-        case TransactionType.Expense:
-            return "Expense";
-        default:
-            return "Unknown";
-    }
+    Income = 'Income',
+    Expense = 'Expense',
 }
+export const transactionType = z.nativeEnum(TransactionType);
 
 export enum PaymentMethod {
-    OTHER = "other",
-    CASH = "cash",
-    CREDIT_CARD = "credit_card",
-    DEBIT_CARD = "debit_card",
-    BANK_TRANSFER = "bank_transfer",
-};
+    Other = 'Other',
+    Cash = 'Cash',
+    CreditCard = 'CreditCard',
+    DebitCard = 'DebitCard',
+    BankTransfer = 'BankTransfer',
+}
+
+export const paymentMethod = z.nativeEnum(PaymentMethod);
+
+export const createTransactionSchema = z.object({
+    profileId: z.string(),
+    amount: z.coerce.number().positive(),
+    description: z.string().min(1),
+    categoryId: z.string(),
+    type: transactionType,
+    isRecurring: z.boolean(),
+    paymentMethod: paymentMethod,
+    merchant: z.string().optional(),
+});
+
+export type CreateTransactionSchema = typeof createTransactionSchema;
+export type CreateTransactionRequest = z.infer<CreateTransactionSchema> & { userId: string };

@@ -1,9 +1,5 @@
 <script lang="ts">
-	import {
-		TransactionType,
-		getTransactionTypeDisplayName,
-		type Transaction
-	} from '$lib/models/transaction';
+	import { type Transaction } from '$lib/models/transaction';
 	import { Badge } from '../ui/badge';
 	import * as Table from '../ui/table';
 
@@ -12,7 +8,7 @@
 
 <Table.Row>
 	<Table.Cell>
-		<div class="font-medium">{getTransactionTypeDisplayName(transaction.type)}</div>
+		<div class="font-medium">{transaction.type}</div>
 		<div class="hidden text-sm text-muted-foreground md:inline">
 			{transaction.description}
 		</div>
@@ -26,8 +22,8 @@
 	>
 	<Table.Cell class="text-right"
 		><span
-			class:text-red-700={transaction.type === TransactionType.Expense}
-			class:text-green-700={transaction.type === TransactionType.Income}>${transaction.amount}</span
+			class:text-red-700={transaction.type === 'Income'}
+			class:text-green-700={transaction.type === 'Expense'}>${transaction.amount}</span
 		></Table.Cell
 	>
 </Table.Row>

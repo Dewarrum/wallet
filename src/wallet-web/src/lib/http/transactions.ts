@@ -1,4 +1,4 @@
-import type { Transaction } from "$lib/models/transaction";
+import type { CreateTransactionRequest, Transaction } from "$lib/models/transaction";
 import type { PageResponse } from ".";
 
 export const createTransactionClient = (apiUrl: string) => {
@@ -8,7 +8,20 @@ export const createTransactionClient = (apiUrl: string) => {
         return json;
     }
 
+    async function create(transaction: CreateTransactionRequest) {
+        const response = await fetch(`${apiUrl}/transactions`, {
+            method: "POST",
+            body: JSON.stringify(transaction),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const json: Transaction = await response.json();
+        return json;
+    }
+
     return {
         get,
+        create,
     }
 }

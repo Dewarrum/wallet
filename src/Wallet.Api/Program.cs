@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Wallet.Api.Categories;
 using Wallet.Api.Profiles;
 using Wallet.Api.Transactions;
@@ -9,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
 PersistenceModule.Configure(builder.Services, builder.Configuration);
 ApplicationModule.Configure(builder.Services);
