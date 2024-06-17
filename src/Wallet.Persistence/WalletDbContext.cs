@@ -22,15 +22,6 @@ public sealed class WalletDbContext : DbContext
         Categories = Set<Category>();
     }
 
-    public WalletDbContext() { }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder
-            .UseNpgsql("Host=localhost;Database=wallet;Username=dev;Password=dev")
-            .UseSnakeCaseNamingConvention();
-    }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>().HasKey(u => u.Id);
