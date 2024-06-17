@@ -1,0 +1,11 @@
+wallet-web
+.gitignore
+.git
+.idea
+docker-compose.yml
+.dev-env
+.config
+.DS_Store
+**/bin
+**/obj
+appsettings.Development.json
