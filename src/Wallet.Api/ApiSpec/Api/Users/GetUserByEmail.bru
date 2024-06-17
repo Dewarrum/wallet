@@ -1,0 +1,15 @@
+meta {
+  name: GetUserByEmail
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{host}}/api/users?email=yura.tsai@gmail.com
+  body: none
+  auth: inherit
+}
+
+params:query {
+  email: yura.tsai@gmail.com
+}

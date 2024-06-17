@@ -1,0 +1,21 @@
+meta {
+  name: GetToken
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/oidc/token
+  body: formUrlEncoded
+  auth: basic
+}
+
+auth:basic {
+  username: {{username}}
+  password: {{password}}
+}
+
+body:form-urlencoded {
+  grant_type: client_credentials
+  resource: {{resource}}
+}

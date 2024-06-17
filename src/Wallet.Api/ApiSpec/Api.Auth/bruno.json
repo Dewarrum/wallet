@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Wallet.Api.Auth",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

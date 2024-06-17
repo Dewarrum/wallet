@@ -11,9 +11,9 @@ public sealed class Category(
     private Category()
         : this(default, default, default!, default!, default) { }
 
-    public Guid Id { get; } = id;
-    public Guid UserId { get; } = userId;
-    public string Name { get; } = name;
-    public string Description { get; } = description;
-    public DateTime CreatedAt { get; } = createdAt;
+    public Guid Id { get; init; } = id;
+    public Guid UserId { get; init; } = userId;
+    public string Name { get; private set; } = name;
+    public string Description { get; private set; } = description;
+    public DateTime CreatedAt { get; init; } = createdAt;
 }

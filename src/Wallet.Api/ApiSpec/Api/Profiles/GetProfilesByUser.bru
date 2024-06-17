@@ -1,0 +1,15 @@
+meta {
+  name: GetProfilesByUser
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{host}}/api/profiles?userId=201b3b33-9d08-4c61-aec9-681a85b0a3f7
+  body: none
+  auth: inherit
+}
+
+params:query {
+  userId: 201b3b33-9d08-4c61-aec9-681a85b0a3f7
+}

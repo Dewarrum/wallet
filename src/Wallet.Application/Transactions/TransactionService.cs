@@ -35,10 +35,12 @@ internal sealed class TransactionService(
 
     public async Task<IReadOnlyList<Transaction>> GetForProfile(
         Guid profileId,
+        int skip,
+        int take,
         CancellationToken cancellationToken = default
     )
     {
-        return await transactionRepository.GetForProfile(profileId, cancellationToken);
+        return await transactionRepository.GetForProfile(profileId, skip, take, cancellationToken);
     }
 
     public async Task<Transaction> Get(Guid id, CancellationToken cancellationToken = default)

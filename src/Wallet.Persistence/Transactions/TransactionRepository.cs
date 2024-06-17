@@ -17,11 +17,16 @@ internal sealed class TransactionRepository(WalletDbContext dbContext) : ITransa
 
     public async Task<IReadOnlyList<Transaction>> GetForProfile(
         Guid profileId,
+        int skip,
+        int take,
         CancellationToken cancellationToken = default
     )
     {
         return await dbContext
             .Transactions.Where(t => t.ProfileId == profileId)
+            .Skip(skip)
+            .Take(take)
+            .OrderByDescending(t => t.CreatedAt)
             .ToListAsync(cancellationToken);
     }
 

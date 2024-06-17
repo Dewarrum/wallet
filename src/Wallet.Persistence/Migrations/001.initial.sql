@@ -9,6 +9,8 @@ create unique index on users (email);
 
 create table profiles (
     id uuid primary key,
+    name text not null,
+    description text not null,
     user_id uuid references users(id),
     currency text not null,
     created_at timestamp not null

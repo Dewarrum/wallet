@@ -11,6 +11,8 @@ public interface ITransactionService
 
     Task<IReadOnlyList<Transaction>> GetForProfile(
         Guid profileId,
+        int skip,
+        int take,
         CancellationToken cancellationToken = default
     );
 

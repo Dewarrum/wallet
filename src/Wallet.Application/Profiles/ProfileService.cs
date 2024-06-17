@@ -14,6 +14,8 @@ internal sealed class ProfileService(IProfileRepository profileRepository, IUnit
     {
         var profile = new Profile(
             Guid.NewGuid(),
+            request.Name,
+            request.Description,
             request.UserId,
             request.Currency ?? "USD",
             DateTime.UtcNow
@@ -21,6 +23,15 @@ internal sealed class ProfileService(IProfileRepository profileRepository, IUnit
 
         await profileRepository.Add(profile, cancellationToken);
         await unitOfWork.SaveChanges(cancellationToken);
+
+        return profile;
+    }
+
+    public async Task<Profile> Get(Guid id, CancellationToken cancellationToken = default)
+    {
+        var profile = await profileRepository.Get(id, cancellationToken);
+        if (profile is null)
+            throw new ProfileNotFoundException(id);
 
         return profile;
     }
