@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Wallet.Api.Categories;
 using Wallet.Api.Profiles;
@@ -50,10 +51,15 @@ builder.Services.AddAuthorization();
 PersistenceModule.Configure(builder.Services, builder.Configuration);
 ApplicationModule.Configure(builder.Services);
 
-var configurationDebugView = builder.Configuration.GetDebugView();
-
 var app = builder.Build();
-app.Logger.LogInformation(configurationDebugView);
+
+using (var scope = app.Services.CreateScope())
+await using (var db = scope.ServiceProvider.GetRequiredService<WalletDbContext>())
+{
+    await db.Database.EnsureCreatedAsync();
+    await db.Database.MigrateAsync();
+}
+
 app.UsePathBase("/api");
 
 UserEndpoints.Map(app);
