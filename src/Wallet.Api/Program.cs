@@ -50,7 +50,10 @@ builder.Services.AddAuthorization();
 PersistenceModule.Configure(builder.Services, builder.Configuration);
 ApplicationModule.Configure(builder.Services);
 
+var configurationDebugView = builder.Configuration.GetDebugView();
+
 var app = builder.Build();
+app.Logger.LogInformation(configurationDebugView);
 app.UsePathBase("/api");
 
 UserEndpoints.Map(app);
