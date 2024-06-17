@@ -4,7 +4,7 @@ public static class ProfileEndpoints
 {
     public static void Map(WebApplication app)
     {
-        var group = app.MapGroup("profiles").WithTags("profiles");
+        var group = app.MapGroup("profiles").WithTags("profiles").RequireAuthorization();
 
         ProfileCreateEndpoint.Map(group);
         ProfileGetEndpoint.Map(group);

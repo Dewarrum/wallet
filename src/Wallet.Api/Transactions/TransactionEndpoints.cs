@@ -4,7 +4,7 @@ public static class TransactionEndpoints
 {
     public static void Map(WebApplication app)
     {
-        var group = app.MapGroup("transactions").WithTags("transactions");
+        var group = app.MapGroup("transactions").WithTags("transactions").RequireAuthorization();
 
         TransactionCreateEndpoint.Map(group);
         TransactionGetEndpoint.Map(group);
