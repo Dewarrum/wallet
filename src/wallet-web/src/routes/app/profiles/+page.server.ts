@@ -1,8 +1,8 @@
-import { http } from "$lib/http.js";
+import { getProfiles } from "$lib/profiles/http.js";
 
-export async function load({ parent }) {
+export async function load({ parent, fetch }) {
     const { user } = await parent();
-    const profiles = await http.profiles.getAll(user.id);
+    const profiles = await getProfiles(user.id, fetch);
 
     return {
         profiles: profiles.items,

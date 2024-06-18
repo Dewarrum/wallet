@@ -1,13 +1,13 @@
-import { http } from "$lib/http.js";
+import { getUser } from "$lib/users/http.js";
 import { redirect } from "@sveltejs/kit";
 
-export async function load({ locals }) {
+export async function load({ locals, fetch }) {
     const user = locals.session?.user;
     if (!user?.email || !user?.name) {
         throw redirect(303, '/');
     }
 
     return {
-        user: await http.users.get(user.email, user.name),
+        user: await getUser(user.email, user.name, fetch),
     }
 }

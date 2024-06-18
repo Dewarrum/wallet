@@ -1,6 +1,7 @@
-import { redirect, type Handle } from '@sveltejs/kit';
+import { redirect, type Handle, type HandleFetch } from '@sveltejs/kit';
 import { handle as authenticationHandle } from './auth';
 import { sequence } from '@sveltejs/kit/hooks';
+import { authService } from '$lib/auth/authService';
 
 const authorizationHandle: Handle = async ({ event, resolve }) => {
     event.locals.session = await event.locals.auth();
@@ -13,4 +14,10 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
     return resolve(event);
 }
 
-export const handle: Handle = sequence(authenticationHandle, authorizationHandle)
+export const handle: Handle = sequence(authenticationHandle, authorizationHandle);
+
+export const handleFetch: HandleFetch = async ({ request, fetch }) => {
+    const token = await authService.getToken();
+    request.headers.set('Authorization', `Bearer ${token.access_token}`);
+    return fetch(request);
+}

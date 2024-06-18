@@ -4,7 +4,8 @@ import type { Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types.js";
 import { superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
-import { http } from "$lib/http.js";
+import { getUser } from "$lib/users/http.js";
+import { createProfile } from "$lib/profiles/http.js";
 
 export const load: PageServerLoad = async () => {
     return {
@@ -21,13 +22,13 @@ export const actions: Actions = {
             });
         }
 
-        const user = await http.users.get(event.locals.session?.user?.email!, event.locals.session?.user?.id!);
-        await http.profiles.create({
+        const user = await getUser(event.locals.session?.user?.email!, event.locals.session?.user?.id!, event.fetch);
+        await createProfile({
             name: form.data.name,
             description: form.data.description,
             currency: form.data.currency,
             userId: user.id,
-        });
+        }, event.fetch);
 
         return {
             form,

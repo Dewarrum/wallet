@@ -1,34 +1,27 @@
-import type { PageResponse } from "$lib/http";
+import { API_URL } from "$env/static/private";
+import type { Fetch, PageResponse } from "$lib/http";
 import type { CreateProfileRequest, Profile } from "$lib/profiles/models";
 
-export const createProfilesClient = (apiUrl: string) => {
-    async function get(profileId: string) {
-        const response = await fetch(`${apiUrl}/profiles/${profileId}`);
-        const json: Profile = await response.json();
-        return json;
-    }
+export async function getProfiles(userId: string, fetch: Fetch) {
+    const response = await fetch(`${API_URL}/profiles?userId=${userId}`);
+    const json: PageResponse<Profile> = await response.json();
+    return json;
+}
 
-    async function getMany(userId: string) {
-        const response = await fetch(`${apiUrl}/profiles?userId=${userId}`);
-        const json: PageResponse<Profile> = await response.json();
-        return json;
-    }
+export async function getProfileById(id: string, fetch: Fetch) {
+    const response = await fetch(`${API_URL}/profiles/${id}`);
+    const json: Profile = await response.json();
+    return json;
+}
 
-    async function create(profile: CreateProfileRequest) {
-        const response = await fetch(`${apiUrl}/profiles`, {
-            method: "POST",
-            body: JSON.stringify(profile),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        const json: Profile = await response.json();
-        return json;
-    }
-
-    return {
-        get,
-        getAll: getMany,
-        create,
-    }
+export async function createProfile(request: CreateProfileRequest, fetch: Fetch) {
+    const response = await fetch(`${API_URL}/profiles`, {
+        method: "POST",
+        body: JSON.stringify(request),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    const json: Profile = await response.json();
+    return json;
 }

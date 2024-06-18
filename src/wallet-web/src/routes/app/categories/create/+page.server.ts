@@ -4,7 +4,8 @@ import type { PageServerLoad } from "./$types.js";
 import { superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
 import { createCategorySchema } from "$lib/categories/models.js";
-import { http } from "$lib/http.js";
+import { getUser } from "$lib/users/http.js";
+import { createCategory } from "$lib/categories/http.js";
 
 export const load: PageServerLoad = async () => {
     return {
@@ -14,7 +15,6 @@ export const load: PageServerLoad = async () => {
 
 export const actions: Actions = {
     default: async (event) => {
-        console.log(event);
         const form = await superValidate(event, zod(createCategorySchema));
         if (!form.valid) {
             return fail(400, {
@@ -22,12 +22,12 @@ export const actions: Actions = {
             });
         }
 
-        const user = await http.users.get(event.locals.session?.user?.email!, event.locals.session?.user?.id!);
-        await http.categories.create({
+        const user = await getUser(event.locals.session?.user?.email!, event.locals.session?.user?.id!, event.fetch);
+        await createCategory({
             name: form.data.name,
             description: form.data.description,
             userId: user.id,
-        });
+        }, event.fetch);
 
         return {
             form,
