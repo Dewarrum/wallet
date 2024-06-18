@@ -1,11 +1,11 @@
-import { REDIS_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import * as authHttp from '$lib/auth/http';
 import { createClient } from 'redis';
 import type { AuthToken } from './models';
 import { logger } from '$lib/server/logger';
 
 const redis = createClient({
-    url: REDIS_URL,
+    url: env.REDIS_URL,
 });
 await redis.connect();
 

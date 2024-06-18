@@ -5,7 +5,7 @@ import { superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
 import { type PageResponse } from "$lib/http.js";
 import { createTransactionSchema } from "$lib/transactions/models.js";
-import { API_URL } from "$env/static/private";
+import { env } from "$env/dynamic/private";
 import type { Profile } from "$lib/profiles/models.js";
 import type { Category } from "$lib/categories/models.js";
 import { getUser } from "$lib/users/http.js";
@@ -14,14 +14,14 @@ import { createTransaction, getTransactions } from "$lib/transactions/http.js";
 type Fetch = typeof fetch;
 
 async function getProfiles(userId: string, fetch: Fetch) {
-    const response = await fetch(`${API_URL}/profiles?userId=${userId}`);
+    const response = await fetch(`${env.API_URL}/profiles?userId=${userId}`);
     const profiles: PageResponse<Profile> = await response.json();
 
     return profiles.items;
 }
 
 async function getCategories(userId: string, fetch: Fetch) {
-    const response = await fetch(`${API_URL}/categories?userId=${userId}`);
+    const response = await fetch(`${env.API_URL}/categories?userId=${userId}`);
     const categories: PageResponse<Category> = await response.json();
 
     return categories.items;
