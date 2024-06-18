@@ -2,7 +2,7 @@ import { env } from "$env/dynamic/private";
 import type { AuthToken } from "./models";
 
 export async function getToken() {
-    const response = await fetch(`${env.API_URL}/oidc/token`, {
+    const response = await fetch(`${env.LOGTO_API_URL}/oidc/token`, {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
