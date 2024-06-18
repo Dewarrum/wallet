@@ -24,4 +24,4 @@ WORKDIR /app
 COPY --from=deps /app/node_modules /app/node_modules
 COPY --from=build /app/build /app/build
 ENV NODE_ENV production
-CMD ["node", "./build/index.js"]
+CMD ["node", "./build/index.js", "--input-type=module"]
