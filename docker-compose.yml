@@ -13,5 +13,12 @@ services:
       - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
 
+  valkey:
+    container_name: valkey
+    image: valkey/valkey:7.2
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
 volumes:
   postgres-data:
